@@ -31,10 +31,8 @@ export class User {
     in: Building[];
 
     @OneToMany(()=>Ticket, (ticket)=>ticket.fromUser)
-    @JoinColumn()
     tickets: Ticket[];
     
     @OneToMany(()=>Comment, (comment)=>comment.fromUser)
-    @JoinColumn()
     comments: Comment[];
 }
