@@ -25,7 +25,7 @@ export class TicketsService {
     ) {}
 
     async findAll(): Promise<Ticket[]> {
-        return await this.ticketRepo.find();
+        return await this.ticketRepo.find({relations: {forBuilding: true}});
     }
 
     async findById(id: number): Promise<Ticket> {

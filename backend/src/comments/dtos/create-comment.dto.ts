@@ -7,5 +7,8 @@ export class CreateCommentDto {
     text: string;
 
     @IsNumber()
-    ticketId: number;
+    tId: number;
+
+    @IsNumber()
+    uId: number
 }

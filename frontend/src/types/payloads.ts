@@ -15,14 +15,14 @@ export interface CreateBuildingPayload {
 export interface CreateTicketPayload {
     title: string;
     desc: string;
-    buildingId: number;
+    bId: number;
     urgency?: TicketUrgency;
     allowComments?: boolean;
 };
 
 export interface CreateCommentPayload {
     text: string;
-    ticketId: number;
+    tId: number;
 };
 
 // update payloads

@@ -1,6 +1,6 @@
 export type UserType = "user" | "manager" | "admin";
 
-export type BuildingType = "residential" | "institute" | "other";
+export type BuildingType = "residential" | "institutional" | "other";
 
 export type TicketUrgency = "low" | "medium" | "high" | "critical";
 

@@ -1,0 +1,25 @@
+.renova-app { --bs-primary: #305d87; --bs-primary-rgb: 48,93,135; background: #f4f6f9; color: #243447; min-height: 100vh; }
+.renova-app .btn-primary { --bs-btn-bg:#305d87; --bs-btn-border-color:#305d87; --bs-btn-hover-bg:#254e75; --bs-btn-hover-border-color:#254e75; --bs-btn-active-bg:#254e75; }
+.renova-app .btn-outline-primary { --bs-btn-color:#305d87; --bs-btn-border-color:#9ab0c3; --bs-btn-hover-bg:#305d87; --bs-btn-hover-border-color:#305d87; }
+.renova-app .form-control:focus, .renova-app .form-select:focus { border-color: #93adc6; box-shadow: 0 0 0 .2rem rgb(48 93 135 / 13%); }
+.renova-sidebar { background: #1c3046; color: #f9fbfd; width: 215px; }
+.renova-brand { display: flex; align-items: center; gap: 12px; font-size: 1.45rem; font-weight: 750; letter-spacing: -.04em; }
+.renova-brand small { display: block; font-size: .69rem; font-weight: 400; letter-spacing: 0; color: #b0c1cf; }
+.renova-brand-mark { width: 38px; height: 38px; display: grid; place-items: center; background:#345a77; border-radius: 10px; color: #fff; }
+.renova-nav-item { display: block; background: transparent; color: #c7d5e0; border: 0; border-radius: 8px; text-align: left; padding: 11px 13px; font-weight: 500; }
+.renova-nav-item:hover { background: #29445e; color:#fff; }
+.renova-nav-item.active { background: #3a5973; color:#fff; }
+.renova-sidebar-note { font-size: .78rem; line-height: 1.6; color: #95abbc; border-top: 1px solid #3e5264; padding-top: 14px; }
+.renova-topbar { background: #fff; border-bottom: 1px solid #e5eaf0; }
+.renova-main { max-width: 1450px; margin: 0 auto; }
+.renova-card { border: 1px solid #e5eaf0; border-radius: 12px; box-shadow: 0 2px 7px rgb(26 54 82 / 3%); overflow: hidden; }
+.renova-card .card-header { border-bottom: 1px solid #edf0f4; padding: 15px 19px; }
+.renova-stat { cursor: pointer; transition: transform .12s ease; }
+.renova-stat:hover { transform: translateY(-2px); }
+.renova-table th { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: #6b7d90; font-weight: 650; background: #f8fafc; }
+.renova-table td, .renova-table th { padding: 15px 14px; }
+.renova-truncate { max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.renova-comment { background: #f8fafc; border: 1px solid #e6ecf1; border-radius: 9px; padding: 15px; }
+.renova-description { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.min-width-0 { min-width: 0; }
+@media (max-width: 991px) { .renova-sidebar { width: auto; } .renova-brand { margin-bottom: 8px !important; } .renova-nav-item { padding: 8px 11px; } }

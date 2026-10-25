@@ -13,4 +13,4 @@ export const updateTicket = (id: number, data: UpdateTicketPayload) => axios.put
 export const deleteTicket = (id: number) => axios.delete(`${API_URL}/${id}`);
 
 // logic
-export const changeTicketProperty = (id: number, data: ChangeTicketPropertiesPayload) => axios.put(`${API_URL}/${id}`, data);
+export const changeTicketProperty = (id: number, data: ChangeTicketPropertiesPayload) => axios.put(`${API_URL}/update-properties/${id}`, data);

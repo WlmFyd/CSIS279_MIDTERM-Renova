@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsNotEmpty, isNumber, IsNumber, IsOptional, IsString } from "class-validator";
 import { TicketUrgency } from "../enums/ticket-urgency.enums.ts";
 
 export class CreateTicketDto {
@@ -19,5 +19,8 @@ export class CreateTicketDto {
     allowComments?: boolean;
 
     @IsNumber()
-    buildingId: number;
+    bId: number;
+
+    @IsNumber()
+    uId: number;
 }

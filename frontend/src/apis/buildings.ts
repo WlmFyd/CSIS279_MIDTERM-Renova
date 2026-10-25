@@ -11,5 +11,5 @@ export const updateBuilding = (id: number, data: UpdateBuildingPayload) => axios
 export const deleteBuilding = (id: number) => axios.delete(`${API_URL}/${id}`);
 
 // logic
-export const joinBuilding = (id: number, data: number) => axios.post(`${API_URL}/${id}/join`, data);
-export const leaveBuilding = (id: number, data: number) => axios.post(`${API_URL}/${id}/leave`, data);
+export const joinBuilding = (id: number, uId: number) => axios.post(`${API_URL}/${id}/join`, {uId} );
+export const leaveBuilding = (id: number, uId: number) => axios.post(`${API_URL}/${id}/leave`, { uId });

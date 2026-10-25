@@ -41,7 +41,7 @@ export class TicketsController {
         return await this.ticketsService.delete(id)
     }
 
-    @Put(':id')
+    @Put('/update-properties/:id')
     async changeTicketProperty(
         @Param('id', ParseIntPipe) id: number,
         @Body() options: {

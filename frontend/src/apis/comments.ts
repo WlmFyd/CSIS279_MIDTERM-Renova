@@ -6,8 +6,8 @@ const API_URL = "http://localhost:6767/comments"
 
 // crud
 export const getComments = () => axios.get<Comment[]>(API_URL);
-export const getCommentsFromTicket = (ticketId: number) => axios.get<Comment[]>(`${API_URL}/from-ticket/${ticketId}`);
+export const getCommentsFromTicket = (ticketId: number) => axios.get<Comment[]>(`${API_URL}/for-ticket/${ticketId}`);
 export const getCommentById  = (id: number) => axios.get<Comment>(`${API_URL}/${id}`);
-export const createComment = (data: CreateCommentPayload, userId: number) => axios.post<Comment>(API_URL, {...data, userId})
+export const createComment = (data: CreateCommentPayload, uId: number) => axios.post<Comment>(API_URL, {...data, uId})
 export const updateComment = (id: number, data: UpdateCommentPayload) => axios.put<Comment>(`${API_URL}/${id}`, data);
 export const deleteComment = (id: number) => axios.delete(`${API_URL}/${id}`);
