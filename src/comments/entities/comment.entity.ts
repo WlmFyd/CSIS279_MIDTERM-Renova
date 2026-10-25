@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { Ticket } from "../../tickets/entities/ticket.entity.ts";
 import { User } from "../../users/entities/user.entity.ts";
 
-@Entity()
+@Entity('comments')
 export class Comment {
     @PrimaryGeneratedColumn()
     id: number;
@@ -12,8 +12,8 @@ export class Comment {
 
     // relations
     @ManyToOne(()=>User, (user)=>user.comments)
-    fromUser: User;
+    fromUser: Relation<User>;
 
     @ManyToOne(()=>Ticket, (ticket)=>ticket.comments)
-    ticket: Ticket;
+    ticket: Relation<Ticket>;
 }

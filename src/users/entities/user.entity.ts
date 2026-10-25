@@ -1,10 +1,10 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { UserType } from "../enums/user-type.enum.ts";
 import { Comment } from "../../comments/entities/comment.entity.ts";
-import { Building } from "../../building/entities/building.entity.ts";
+import { Building } from "../../buildings/entities/building.entity.ts";
 import { Ticket } from "../../tickets/entities/ticket.entity.ts";
 
-@Entity()
+@Entity('users')
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -28,11 +28,11 @@ export class User {
     // relations
     @ManyToMany( ()=>Building, (building)=>building.members)
     @JoinTable({ name: "building_members" })
-    in: Building[];
+    in: Relation<Building[]>;
 
     @OneToMany(()=>Ticket, (ticket)=>ticket.fromUser)
-    tickets: Ticket[];
+    tickets: Relation<Ticket[]>;
     
     @OneToMany(()=>Comment, (comment)=>comment.fromUser)
-    comments: Comment[];
+    comments: Relation<Comment[]>;
 }

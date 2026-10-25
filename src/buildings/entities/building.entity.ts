@@ -1,9 +1,9 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { BuildingType } from "../enums/building-type.enum.ts";
 import { User } from "../../users/entities/user.entity.ts";
 import { Ticket } from "../../tickets/entities/ticket.entity.ts";
 
-@Entity()
+@Entity('buildings')
 export class Building {
     @PrimaryGeneratedColumn()
     id: number;
@@ -20,12 +20,12 @@ export class Building {
     
     // relations
     @ManyToMany(()=>User, (user)=>user.in)
-    members: User[];
+    members: Relation<User[]>;
 
     @ManyToMany(()=>User)
     @JoinTable({ name: "building_managers" })
-    managers: User[]
+    managers: Relation<User[]>;
 
     @OneToMany(()=>Ticket, (ticket)=>ticket.forBuilding)
-    tickets: Ticket[];
+    tickets: Relation<Ticket[]>;
 }

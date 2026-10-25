@@ -6,7 +6,7 @@ import { CreateBuildingDto } from './dtos/create-building.dto.ts';
 import { UpdateBuildingDto } from './dtos/update-building.dto.ts';
 
 @Injectable()
-export class BuildingService {
+export class BuildingsService {
     constructor(
         @InjectRepository(Building)
         private readonly buildingRepo: Repository<Building>

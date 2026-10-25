@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { TicketUrgency } from "../enums/ticket-urgency.enums.ts";
 import { TicketStatus } from "../enums/ticket-status.enums.ts";
-import { Building } from "../../building/entities/building.entity.ts";
+import { Building } from "../../buildings/entities/building.entity.ts";
 import { Comment } from "../../comments/entities/comment.entity.ts";
 import { User } from "../../users/entities/user.entity.ts";
 
-@Entity()
+@Entity('tickets')
 export class Ticket {
     @PrimaryGeneratedColumn()
     id: number;
@@ -35,11 +35,11 @@ export class Ticket {
 
     // relations
     @ManyToOne(()=>User, (user)=>user.tickets)
-    fromUser: User;
+    fromUser: Relation<User>;
 
     @ManyToOne(()=>Building, (building)=>building.tickets)
-    forBuilding: Building;
+    forBuilding: Relation<Building>;
 
     @OneToMany(()=>Comment, (comment)=>comment.ticket)
-    comments: Comment[];
+    comments: Relation<Comment[]>;
 }
