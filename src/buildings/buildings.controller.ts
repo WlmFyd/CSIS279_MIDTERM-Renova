@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { BuildingsService } from './buildings.service.ts';
 import { Building } from './entities/building.entity.ts';
 import { CreateBuildingDto } from './dtos/create-building.dto.ts';
@@ -34,5 +34,24 @@ export class BuildingsController {
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return await this.buildingsService.delete(id);
+    }
+
+    // logic
+    @HttpCode(HttpStatus.OK)
+    @Post(':id/join')
+    async join(
+        @Param('id', ParseIntPipe) bId: number,
+        @Body('uId', ParseIntPipe) uId: number
+    ) {
+        return await this.buildingsService.join(bId, uId)
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @Post(':id/leave')
+    async leave(
+        @Param('id', ParseIntPipe) bId: number,
+        @Body('uId', ParseIntPipe) uId: number
+    ) {
+        return await this.buildingsService.leave(bId, uId)
     }
 }
