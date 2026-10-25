@@ -1,8 +1,8 @@
 import axios from "axios"
-import { Comment } from "../types/models";
-import { CreateCommentPayload, UpdateCommentPayload } from "../types/payloads";
+import type { Comment } from "../types/models";
+import type { CreateCommentPayload, UpdateCommentPayload } from "../types/payloads";
 
-const API_URL = "http://localhost:6767/users"
+const API_URL = "http://localhost:6767/comments"
 
 // crud
 export const getComments = () => axios.get<Comment[]>(API_URL);

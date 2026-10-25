@@ -1,6 +1,6 @@
 import axios from "axios"
-import { Building } from "../types/models"
-import { CreateBuildingPayload, UpdateBuildingPayload } from "../types/payloads";
+import type { Building } from "../types/models"
+import type { CreateBuildingPayload, UpdateBuildingPayload } from "../types/payloads";
 
 const API_URL = "http://localhost:6767/buildings"
 

@@ -1,9 +1,9 @@
 import axios from "axios"
-import { Ticket } from "../types/models";
-import { ChangeTicketPropertiesPayload, CreateTicketPayload, UpdateTicketPayload } from "../types/payloads";
+import type { Ticket } from "../types/models";
+import type { ChangeTicketPropertiesPayload, CreateTicketPayload, UpdateTicketPayload } from "../types/payloads";
 
 
-const API_URL = "http://localhost:6767/users"
+const API_URL = "http://localhost:6767/tickets"
 
 // curd
 export const getTickets = () => axios.get<Ticket[]>(API_URL);

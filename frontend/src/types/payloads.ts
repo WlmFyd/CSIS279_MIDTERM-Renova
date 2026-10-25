@@ -1,4 +1,4 @@
-import { BuildingType, TicketStatus, TicketUrgency } from "./enums";
+import type { BuildingType, TicketStatus, TicketUrgency } from "./enums";
 
 // create payloads
 export interface CreateUserPayload {
