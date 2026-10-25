@@ -54,4 +54,13 @@ export class BuildingsController {
     ) {
         return await this.buildingsService.leave(bId, uId)
     }
+
+    @HttpCode(HttpStatus.OK)
+    @Post(':id/assign-manager')
+    async assignManager(
+        @Param('id', ParseIntPipe) bId: number,
+        @Body('uId', ParseIntPipe) uId: number
+    ) {
+        return await this.buildingsService.assignManager(bId, uId);
+    }
 }

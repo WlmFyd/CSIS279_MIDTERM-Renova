@@ -13,14 +13,23 @@ export class CommentsController {
         return await this.commentsService.findAll();
     }
     
+    @Get('for-ticket/:id')
+    async findForTicket(@Param('id', ParseIntPipe) id: number): Promise<Comment[]> {
+        return await this.commentsService.findForTicket(id);
+    }
+
     @Get(':id')
     async findById(@Param('id', ParseIntPipe) id: number): Promise<Comment> {
         return await this.commentsService.findById(id);
     }
 
     @Post()
-    async create(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
-        return this.commentsService.create(createCommentDto);
+    async create(
+        @Body() createCommentDto: CreateCommentDto,
+        @Body('tId', ParseIntPipe) tId: number,
+        @Body('uId', ParseIntPipe) uId: number
+    ): Promise<Comment> {
+        return this.commentsService.create(createCommentDto, tId, uId);
     }
 
     @Put(':id')

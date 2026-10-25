@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateBuildingDto } from './dtos/create-building.dto.ts';
 import { UpdateBuildingDto } from './dtos/update-building.dto.ts';
 import { User } from '../users/entities/user.entity.ts';
+import { TicketStatus } from '../tickets/enums/ticket-status.enums.ts';
 
 @Injectable()
 export class BuildingsService {
@@ -96,6 +97,37 @@ export class BuildingsService {
             }
         } else {
             throw new ConflictException(`User ${uId} is not a member of building ${bId}`)
+        }
+    }
+
+    async assignManager(bId: number, uId: number): Promise<{ message: string }> {
+        const user = await this.userRepo.findOne({
+            where: { id: uId },
+            relations: { in: true }
+        });
+        const building = await this.buildingRepo.findOne({ 
+            where: { id: bId},
+            relations: {managers: true} 
+        });
+
+        if (!user) {
+            throw new NotFoundException(`User of id ${uId} does not exist`);
+        }
+        if (!building) {
+            throw new NotFoundException(`Building of id ${bId} does not exist`);
+        }
+        
+        const isMember = user.in.some(bdg => bdg.id === bId);
+
+        if (isMember) {
+            building.managers.push(user);
+            this.buildingRepo.save(building);
+
+            return {
+                message: `User ${uId} is now a manager of building ${bId}`
+            }
+        } else {
+            throw new ConflictException(`User ${uId} is not a member of building ${bId}`);
         }
     }
 }
