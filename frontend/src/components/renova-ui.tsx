@@ -32,8 +32,8 @@ export function ticketAuthorName(ticket: Ticket): string {
   const t = ticket as Ticket & { fromUser?: unknown; fromUserId?: number };
   const author = t.fromUser;
   if (author !== null && typeof author === 'object' && 'name' in author && typeof author.name === 'string') return author.name;
-  const id = relationId(author) ?? t.fromUserId;
-  return id ? `User #${id}` : 'Not loaded';
+  const id = ticket.fromUser;
+  return id ? `User #${id}` : 'Not loaded!';
 }
 
 export function PageHeading({ title, subtitle, action }: { title: string; subtitle: string; action?: ReactNode }) {

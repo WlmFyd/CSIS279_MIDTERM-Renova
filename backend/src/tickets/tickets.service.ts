@@ -29,7 +29,7 @@ export class TicketsService {
     }
 
     async findById(id: number): Promise<Ticket> {
-        const ticket = await this.ticketRepo.findOneBy({ id })
+        const ticket = await this.ticketRepo.findOne({ where: {id}, relations: {fromUser: true} })
         if (!ticket) throw new NotFoundException(`Ticket of id ${id} not found`)
         return ticket
     }

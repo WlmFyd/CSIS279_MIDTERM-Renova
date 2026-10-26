@@ -18,6 +18,11 @@ export class UsersController {
         return await this.usersService.findById(id);
     }
 
+    @Get('/from-comment/:id')
+    async getUserFromComment(@Param('id', ParseIntPipe) id: number): Promise<User> {
+        return await this.usersService.getUserFromComment(id);
+    }
+
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
         return await this.usersService.create(createUserDto);

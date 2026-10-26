@@ -25,9 +25,11 @@ export type Ticket = {
     urgency: TicketUrgency;
     status: TicketStatus;
     allowComments: boolean;
+    fromUser: User;
 }
 
 export type Comment = {
     id: number;
     text: string;
+    fromUser: User;
 }

@@ -89,12 +89,22 @@ export default function BuildingsPage({ demoUserId }: { demoUserId: number }) {
 
     <Modal show={showForm} onHide={() => !busy && setShowForm(false)} centered>
       <Form onSubmit={event => void submit(event)}>
-        <Modal.Header closeButton><Modal.Title className="fs-5">{editing === null ? 'New building' : 'Edit building'}</Modal.Title></Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title className="fs-5">{editing === null ? 'New building' : 'Edit building'}</Modal.Title>
+        </Modal.Header>
         <Modal.Body><Row className="g-3">
-          <Col xs={12}><Form.Group><Form.Label>Name</Form.Label><Form.Control required value={name} onChange={event => setName(event.target.value)} placeholder="e.g. North Campus"/></Form.Group></Col>
-          <Col xs={12}><Form.Group><Form.Label>Building type</Form.Label><Form.Select value={type} onChange={event => setType(event.target.value)}>
-            <option value="residential">Residential</option><option value="institutional">Institutional</option><option value="other">Other</option>
-          </Form.Select><Form.Text muted>Adjust options here if your BuildingType enum differs.</Form.Text></Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Name</Form.Label>
+            <Form.Control required value={name} onChange={event => setName(event.target.value)} placeholder="e.g. North Campus"/>
+          </Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Building type</Form.Label>
+            <Form.Select value={type} onChange={event => setType(event.target.value)}>
+            <option value="residential">Residential</option>
+            <option value="institutional">Institutional</option>
+            <option value="other">Other</option>
+            </Form.Select>          
+          </Form.Group></Col>
         </Row></Modal.Body>
         <Modal.Footer><Button variant="outline-secondary" onClick={() => setShowForm(false)} disabled={busy}>Cancel</Button><Button type="submit" disabled={busy || !name.trim()}>{busy ? 'Saving...' : 'Save building'}</Button></Modal.Footer>
       </Form>

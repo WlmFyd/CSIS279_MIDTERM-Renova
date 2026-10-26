@@ -45,7 +45,6 @@ export default function RenovaShell() {
           <nav className="d-flex flex-row flex-lg-column gap-1 flex-wrap" aria-label="Main navigation">
             {navItems.map(item => <button key={item.key} type="button" className={`renova-nav-item ${page === item.key || (page === 'ticketDetails' && item.key === 'tickets') ? 'active' : ''}`} onClick={() => setPage(item.key)}>{item.label}</button>)}
           </nav>
-          <div className="renova-sidebar-note mt-4 d-none d-lg-block">Local demonstration mode<br/>Authentication not enabled</div>
         </Col>
         <Col className="min-width-0">
           <header className="renova-topbar d-flex flex-wrap align-items-center justify-content-between gap-2 px-4 py-3">

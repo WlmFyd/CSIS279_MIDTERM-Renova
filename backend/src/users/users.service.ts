@@ -5,12 +5,16 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto.ts';
 import { UpdateUserDto } from './dtos/update-user.dto.ts';
 import * as bcrypt from 'bcrypt';
+import { Comment } from '../comments/entities/comment.entity.ts';
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectRepository(User)
-        private readonly userRepo: Repository<User>
+        private readonly userRepo: Repository<User>,
+
+        @InjectRepository(Comment)
+        private readonly commentRepo: Repository<Comment>
     ) {}
 
     async findAll(): Promise<User[]> {
@@ -20,6 +24,17 @@ export class UsersService {
     async findById(id: number): Promise<User> {
         const user = await this.userRepo.findOneBy({ id });
         if (!user) throw new NotFoundException(`User of id ${id} not found`);
+        return user;
+    }
+
+    async getUserFromComment(id: number): Promise<User> {
+        const comment = await this.commentRepo.findOne({ 
+            where: {id},
+            relations: {fromUser: true}
+         })
+        if (!comment) throw new NotFoundException(`Comment ${id} does not exist`);
+        const user = comment.fromUser;
+        if (!user) throw new NotFoundException(`User does not exist?`);
         return user;
     }
 

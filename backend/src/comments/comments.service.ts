@@ -27,7 +27,7 @@ export class CommentsService {
     async findForTicket(id: number): Promise<Comment[]> {
         const ticket = await this.ticketRepo.findOneBy({ id })
         if (!ticket) { throw new NotFoundException(`Ticket ${id} does not exist`); }
-        return await this.commentRepo.find({ where: {ticket: {id} } })
+        return await this.commentRepo.find({ where: {ticket: {id} }, relations: {fromUser: true} })
     }
 
     async findById(id: number): Promise<Comment> {

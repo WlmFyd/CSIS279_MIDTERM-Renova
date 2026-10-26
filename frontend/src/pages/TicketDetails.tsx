@@ -4,13 +4,17 @@ import { Button, Card, Col, Form, Row, Stack } from 'react-bootstrap';
 import { getCommentsFromTicket, createComment, updateComment, deleteComment } from '../apis/comments';
 import { changeTicketProperty, deleteTicket, getTicketById } from '../apis/tickets';
 import type { Comment, Ticket } from '../types/models';
-import { apiError, ConfirmDialog, Empty, Loading, PageHeading, relationId, RequestNotice, StatusTag, ticketAuthorName } from '../components/renova-ui';
+import { apiError, ConfirmDialog, Empty, Loading, PageHeading, RequestNotice, StatusTag, ticketAuthorName } from '../components/renova-ui';
+
+// function commentAuthor(comment: Comment): string {
+//   const c = comment as Comment & { fromUser?: unknown; fromUserId?: number };
+//   const author = c.fromUser;
+//   if (author !== null && typeof author === 'object' && 'name' in author && typeof author.name === 'string') return author.name;
+//   return `User #${relationId(author) ?? c.fromUserId ?? '?'}`;
+// }
 
 function commentAuthor(comment: Comment): string {
-  const c = comment as Comment & { fromUser?: unknown; fromUserId?: number };
-  const author = c.fromUser;
-  if (author !== null && typeof author === 'object' && 'name' in author && typeof author.name === 'string') return author.name;
-  return `User #${relationId(author) ?? c.fromUserId ?? '?'}`;
+    return comment.fromUser?.name ?? "Unknown User";
 }
 
 export default function TicketDetailsPage({ ticketId, demoUserId, onBack, onDeleted }: {
@@ -38,15 +42,20 @@ export default function TicketDetailsPage({ ticketId, demoUserId, onBack, onDele
   useEffect(() => { void load(); }, [load]);
 
   async function changeProperty(data: { status?: Ticket['status']; urgency?: Ticket['urgency']; allowComments?: boolean }) {
-    setBusy(true); setError(''); setSuccess('');
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try { await changeTicketProperty(ticketId, data); await load(); setSuccess('Ticket updated.'); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
   }
 
   async function submitComment(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); if (!text.trim()) return;
-    setBusy(true); setError(''); setSuccess('');
+    event.preventDefault(); 
+    if (!text.trim()) return;
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try { await createComment({ text: text.trim(), tId: ticketId }, demoUserId); setText(''); await load(); setSuccess('Comment posted.'); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
@@ -61,14 +70,17 @@ export default function TicketDetailsPage({ ticketId, demoUserId, onBack, onDele
 
   async function confirmDeleteComment() {
     if (deleteCommentId === null) return;
-    setBusy(true); setError(''); setSuccess('');
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try { await deleteComment(deleteCommentId); setDeleteCommentId(null); await load(); setSuccess('Comment deleted.'); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
   }
 
   async function confirmDeleteTicket() {
-    setBusy(true); setError('');
+    setBusy(true); 
+    setError('');
     try { await deleteTicket(ticketId); setShowDeleteTicket(false); onDeleted(); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
