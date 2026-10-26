@@ -6,8 +6,6 @@ import { CreateTicketDto } from './dtos/create-ticket.dto.ts';
 import { UpdateTicketDto } from './dtos/update-ticket.dto.ts';
 import { User } from '../users/entities/user.entity.ts';
 import { Building } from '../buildings/entities/building.entity.ts';
-import { ExceptionHandler } from '@nestjs/core/errors/exception-handler.js';
-import { uint8ArrayToHex } from 'typeorm/util/Uint8ArrayUtils.js';
 import { TicketStatus } from './enums/ticket-status.enums.ts';
 import { TicketUrgency } from './enums/ticket-urgency.enums.ts';
 

@@ -12,7 +12,6 @@ import '../styles/renova.css';
 
 type Page = 'dashboard' | 'buildings' | 'tickets' | 'users' | 'ticketDetails';
 
-/** Drop <RenovaShell /> into your existing App.tsx. No router needed. */
 export default function RenovaShell() {
   const [page, setPage] = useState<Page>('dashboard');
   const [ticketId, setTicketId] = useState<number | null>(null);

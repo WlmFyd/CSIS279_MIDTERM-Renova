@@ -40,7 +40,10 @@ export default function DashboardPage({ onNavigate, onOpenTicket }: { onNavigate
     {loading ? <Loading/> : <>
       <Row className="g-3 mb-4">{stats.map(stat => <Col key={stat.label} sm={6} xl={3}>
         <Card className="renova-card h-100 renova-stat" role="button" onClick={() => onNavigate(stat.link)}>
-          <Card.Body><div className="small text-secondary mb-2">{stat.label}</div><div className="display-6 fw-semibold">{stat.value}</div></Card.Body>
+          <Card.Body>
+            <div className="small text-secondary mb-2">{stat.label}</div>
+            <div className="display-6 fw-semibold">{stat.value}</div>
+          </Card.Body>
         </Card>
       </Col>)}</Row>
       <Card className="renova-card">

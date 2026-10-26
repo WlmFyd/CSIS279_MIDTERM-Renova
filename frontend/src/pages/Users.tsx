@@ -28,11 +28,26 @@ export default function UsersPage({ onUsersChanged }: { onUsersChanged: () => Pr
   useEffect(() => { void load(); }, [load]);
   const visible = useMemo(() => users.filter(user => `${user.name} ${user.email}`.toLowerCase().includes(search.toLowerCase())), [users, search]);
 
-  function openCreate() { setEditing(null); setName(''); setEmail(''); setPassword(''); setShowForm(true); }
-  function openEdit(user: User) { setEditing(user.id); setName(user.name); setEmail(user.email); setPassword(''); setShowForm(true); }
+  function openCreate() { 
+    setEditing(null); 
+    setName(''); 
+    setEmail(''); 
+    setPassword(''); 
+    setShowForm(true); 
+  }
+  function openEdit(user: User) { 
+    setEditing(user.id); 
+    setName(user.name); 
+    setEmail(user.email); 
+    setPassword(''); 
+    setShowForm(true); 
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setBusy(true); setError(''); setSuccess('');
+    event.preventDefault(); 
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try {
       if (editing === null) {
         const data: CreateUserPayload = { name: name.trim(), email: email.trim(), password };
@@ -50,7 +65,9 @@ export default function UsersPage({ onUsersChanged }: { onUsersChanged: () => Pr
 
   async function confirmDelete() {
     if (!toDelete) return;
-    setBusy(true); setError(''); setSuccess('');
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try { await deleteUser(toDelete.id); setToDelete(null); setSuccess('User deleted.'); await load(); await onUsersChanged(); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
@@ -75,11 +92,23 @@ export default function UsersPage({ onUsersChanged }: { onUsersChanged: () => Pr
       <Form onSubmit={event => void submit(event)}>
         <Modal.Header closeButton><Modal.Title className="fs-5">{editing === null ? 'Create user' : 'Edit user'}</Modal.Title></Modal.Header>
         <Modal.Body><Row className="g-3">
-          <Col xs={12}><Form.Group><Form.Label>Name</Form.Label><Form.Control minLength={3} required value={name} onChange={event => setName(event.target.value)}/></Form.Group></Col>
-          <Col xs={12}><Form.Group><Form.Label>Email</Form.Label><Form.Control required type="email" value={email} onChange={event => setEmail(event.target.value)}/></Form.Group></Col>
-          <Col xs={12}><Form.Group><Form.Label>{editing === null ? 'Password' : 'New password (optional)'}</Form.Label><Form.Control type="password" minLength={8} required={editing === null} value={password} onChange={event => setPassword(event.target.value)}/></Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Name</Form.Label>
+            <Form.Control minLength={3} required value={name} onChange={event => setName(event.target.value)}/>
+          </Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type="email" value={email} onChange={event => setEmail(event.target.value)}/>
+          </Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>{editing === null ? 'Password' : 'New password (optional)'}</Form.Label>
+            <Form.Control type="password" minLength={8} required={editing === null} value={password} onChange={event => setPassword(event.target.value)}/>
+          </Form.Group></Col>
         </Row></Modal.Body>
-        <Modal.Footer><Button variant="outline-secondary" disabled={busy} onClick={() => setShowForm(false)}>Cancel</Button><Button type="submit" disabled={busy}>{busy ? 'Saving...' : 'Save user'}</Button></Modal.Footer>
+        <Modal.Footer>
+          <Button variant="outline-secondary" disabled={busy} onClick={() => setShowForm(false)}>Cancel</Button>
+          <Button type="submit" disabled={busy}>{busy ? 'Saving...' : 'Save user'}</Button>
+        </Modal.Footer>
       </Form>
     </Modal>
     <ConfirmDialog show={toDelete !== null} title="Delete user?" message={`Delete ${toDelete?.name ?? 'this user'}? Related tickets or comments may prevent deletion.`} busy={busy} onCancel={() => setToDelete(null)} onConfirm={() => void confirmDelete()}/>

@@ -27,11 +27,23 @@ export default function BuildingsPage({ demoUserId }: { demoUserId: number }) {
   useEffect(() => { void load(); }, [load]);
   const visible = useMemo(() => buildings.filter(b => `${b.name} ${b.type}`.toLowerCase().includes(search.toLowerCase())), [buildings, search]);
 
-  function openCreate() { setEditing(null); setName(''); setType('residential'); setShowForm(true); }
-  function openEdit(building: Building) { setEditing(building.id); setName(building.name); setType(building.type); setShowForm(true); }
+  function openCreate() { 
+    setEditing(null); 
+    setName(''); 
+    setType('residential'); setShowForm(true);
+  }
+  function openEdit(building: Building) { 
+    setEditing(building.id); 
+    setName(building.name); 
+    setType(building.type); 
+    setShowForm(true); 
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setBusy(true); setError(''); setSuccess('');
+    event.preventDefault(); 
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try {
       const payload: CreateBuildingPayload = { name: name.trim(), type: type as CreateBuildingPayload['type'] };
       if (editing === null) await createBuilding(payload); else await updateBuilding(editing, payload);
@@ -43,9 +55,10 @@ export default function BuildingsPage({ demoUserId }: { demoUserId: number }) {
 
   async function membership(buildingId: number, action: 'join' | 'leave') {
     if (!demoUserId) { setError('Create or select a demo user first.'); return; }
-    setBusy(true); setError(''); setSuccess('');
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try {
-      // Uses your existing APIs exactly as supplied.
       if (action === 'join') await joinBuilding(buildingId, demoUserId);
       else await leaveBuilding(buildingId, demoUserId);
       setSuccess(`User #${demoUserId} ${action === 'join' ? 'joined' : 'left'} building #${buildingId}.`);
@@ -56,7 +69,9 @@ export default function BuildingsPage({ demoUserId }: { demoUserId: number }) {
 
   async function confirmDelete() {
     if (!toDelete) return;
-    setBusy(true); setError(''); setSuccess('');
+    setBusy(true); 
+    setError(''); 
+    setSuccess('');
     try { await deleteBuilding(toDelete.id); setSuccess('Building deleted.'); setToDelete(null); await load(); }
     catch (err) { setError(apiError(err)); }
     finally { setBusy(false); }
@@ -106,7 +121,10 @@ export default function BuildingsPage({ demoUserId }: { demoUserId: number }) {
             </Form.Select>          
           </Form.Group></Col>
         </Row></Modal.Body>
-        <Modal.Footer><Button variant="outline-secondary" onClick={() => setShowForm(false)} disabled={busy}>Cancel</Button><Button type="submit" disabled={busy || !name.trim()}>{busy ? 'Saving...' : 'Save building'}</Button></Modal.Footer>
+        <Modal.Footer>
+          <Button variant="outline-secondary" onClick={() => setShowForm(false)} disabled={busy}>Cancel</Button>
+          <Button type="submit" disabled={busy || !name.trim()}>{busy ? 'Saving...' : 'Save building'}</Button>
+        </Modal.Footer>
       </Form>
     </Modal>
     <ConfirmDialog show={toDelete !== null} title="Delete building?" message={`Delete ${toDelete?.name ?? 'this building'}? This may affect associated tickets.`} busy={busy} onCancel={() => setToDelete(null)} onConfirm={() => void confirmDelete()}/>

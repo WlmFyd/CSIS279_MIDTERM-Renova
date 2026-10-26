@@ -27,7 +27,9 @@ export default function TicketsPage({ demoUserId, onOpenTicket }: { demoUserId: 
   const load = useCallback(async () => {
     try {
       const [ticketResponse, buildingResponse] = await Promise.all([getTickets(), getBuildings()]);
-      setTickets(ticketResponse.data); setBuildings(buildingResponse.data); setError('');
+      setTickets(ticketResponse.data); 
+      setBuildings(buildingResponse.data); 
+      setError('');
       setBuildingId(id => id || buildingResponse.data[0]?.id || 0);
     } catch (err) { setError(apiError(err)); }
     finally { setLoading(false); }
@@ -47,8 +49,6 @@ export default function TicketsPage({ demoUserId, onOpenTicket }: { demoUserId: 
         title: title.trim(), desc: desc.trim(), bId: buildingId,
         urgency: urgency as CreateTicketPayload['urgency'], allowComments
       };
-      // Extra runtime field supports a temporary demo controller accepting @Body('userId').
-      // It doesn't require changing your current API helper's TypeScript signature.
       const requestBody = { ...payload, uId: demoUserId };
       await createTicket(requestBody);
       setSuccess('Ticket submitted successfully.'); setShowCreate(false);
@@ -65,10 +65,15 @@ export default function TicketsPage({ demoUserId, onOpenTicket }: { demoUserId: 
       <Row className="g-2 mb-3">
         <Col md={6}><Form.Control aria-label="Search tickets" placeholder="Search tickets..." value={search} onChange={event => setSearch(event.target.value)}/></Col>
         <Col sm={6} md={3}><Form.Select value={statusFilter} onChange={event => setStatusFilter(event.target.value)} aria-label="Filter ticket status">
-          <option value="all">All statuses</option><option value="pending">Pending</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="rejected">Rejected</option>
+          <option value="all">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="in_progress">In progress</option>
+          <option value="resolved">Resolved</option>
+          <option value="rejected">Rejected</option>
         </Form.Select></Col>
         <Col sm={6} md={3}><Form.Select value={buildingFilter} onChange={event => setBuildingFilter(event.target.value)} aria-label="Filter ticket building">
-          <option value="all">All buildings</option>{buildings.map(building => <option key={building.id} value={building.id}>{building.name}</option>)}
+          <option value="all">All buildings</option>
+          {buildings.map(building => <option key={building.id} value={building.id}>{building.name}</option>)}
         </Form.Select></Col>
       </Row>
       {loading ? <Loading/> : visible.length === 0 ? <Empty text="No tickets match your filters."/> :
@@ -87,18 +92,37 @@ export default function TicketsPage({ demoUserId, onOpenTicket }: { demoUserId: 
       <Form onSubmit={event => void submit(event)}>
         <Modal.Header closeButton><Modal.Title className="fs-5">Create maintenance ticket</Modal.Title></Modal.Header>
         <Modal.Body><Row className="g-3">
-          <Col xs={12}><Form.Group><Form.Label>Title</Form.Label><Form.Control required value={title} onChange={event => setTitle(event.target.value)} placeholder="e.g. Broken elevator"/></Form.Group></Col>
-          <Col xs={12}><Form.Group><Form.Label>Description</Form.Label><Form.Control required as="textarea" rows={4} value={desc} onChange={event => setDesc(event.target.value)} placeholder="Describe the issue clearly"/></Form.Group></Col>
-          <Col md={7}><Form.Group><Form.Label>Building</Form.Label><Form.Select required value={buildingId || ''} onChange={event => setBuildingId(Number(event.target.value))}>
-            <option value="" disabled>Select a building</option>{buildings.map(building => <option key={building.id} value={building.id}>{building.name}</option>)}
-          </Form.Select></Form.Group></Col>
-          <Col md={5}><Form.Group><Form.Label>Urgency</Form.Label><Form.Select value={urgency} onChange={event => setUrgency(event.target.value)}>
-            <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="critical">Critical</option>
-          </Form.Select></Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Title</Form.Label>
+            <Form.Control required value={title} onChange={event => setTitle(event.target.value)} placeholder="e.g. Broken elevator"/>
+          </Form.Group></Col>
+          <Col xs={12}><Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control required as="textarea" rows={4} value={desc} onChange={event => setDesc(event.target.value)} placeholder="Describe the issue clearly"/>
+          </Form.Group></Col>
+          <Col md={7}><Form.Group>
+            <Form.Label>Building</Form.Label>
+            <Form.Select required value={buildingId || ''} onChange={event => setBuildingId(Number(event.target.value))}>
+              <option value="" disabled>Select a building</option>
+              {buildings.map(building => <option key={building.id} value={building.id}>{building.name}</option>)}
+            </Form.Select>
+          </Form.Group></Col>
+          <Col md={5}><Form.Group>
+            <Form.Label>Urgency</Form.Label>
+            <Form.Select value={urgency} onChange={event => setUrgency(event.target.value)}>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </Form.Select>
+          </Form.Group></Col>
           <Col xs={12}><Form.Check type="switch" label="Allow comments on this ticket" checked={allowComments} onChange={event => setAllowComments(event.target.checked)}/></Col>
           <Col xs={12}><div className="small text-secondary">Submitting as demo user #{demoUserId || 'not selected'}.</div></Col>
         </Row></Modal.Body>
-        <Modal.Footer><Button variant="outline-secondary" disabled={busy} onClick={() => setShowCreate(false)}>Cancel</Button><Button type="submit" disabled={busy || !demoUserId || !buildingId || !title.trim() || !desc.trim()}>{busy ? 'Submitting...' : 'Create ticket'}</Button></Modal.Footer>
+        <Modal.Footer>
+          <Button variant="outline-secondary" disabled={busy} onClick={() => setShowCreate(false)}>Cancel</Button>
+          <Button type="submit" disabled={busy || !demoUserId || !buildingId || !title.trim() || !desc.trim()}>{busy ? 'Submitting...' : 'Create ticket'}</Button>
+        </Modal.Footer>
       </Form>
     </Modal>
   </>;

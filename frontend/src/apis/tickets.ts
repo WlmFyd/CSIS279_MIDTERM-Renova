@@ -5,7 +5,7 @@ import type { ChangeTicketPropertiesPayload, CreateTicketPayload, UpdateTicketPa
 
 const API_URL = "http://localhost:6767/tickets"
 
-// curd
+// crud
 export const getTickets = () => axios.get<Ticket[]>(API_URL);
 export const getTicketById = (id: number) => axios.get<Ticket>(`${API_URL}/${id}`);
 export const createTicket = (data: CreateTicketPayload) => axios.post<Ticket>(API_URL, data);
